@@ -7,6 +7,7 @@ namespace Mdanter\Ecc\Crypto\Signature;
 use Mdanter\Ecc\Curves\CurveFactory;
 use Mdanter\Ecc\Curves\SecgCurve;
 use Mdanter\Ecc\Primitives\JacobianPoint;
+use Mdanter\Ecc\Primitives\PointInterface;
 
 class SchnorrSignature
 {
@@ -124,7 +125,7 @@ class SchnorrSignature
         return '0' . $hex;
     }
 
-    private function finalizeSchnorrVerify($r, $P, $s, $e): bool
+    private function finalizeSchnorrVerify(\GMP $r, PointInterface $P, \GMP $s, \GMP $e): bool
     {
         $pointBase = (new JacobianPoint())->getBase();
 
@@ -141,12 +142,7 @@ class SchnorrSignature
         return true;
     }
 
-    /**
-     * @param string $signature Signature
-     * @param string $message   Message
-     * @param string $publicKey Public Key
-     */
-    private function initSchnorrVerify($signature, $message, $publicKey): array
+    private function initSchnorrVerify(string $signature, string $message, string $publicKey): array
     {
         $r = gmp_init(mb_substr($signature, 0, 64), 16);
         $s = gmp_init(mb_substr($signature, 64, 64), 16);
