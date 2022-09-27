@@ -40,7 +40,7 @@ This package is released under the MIT license.
 
 ### Requirements
 
-* PHP 7.0+ or PHP 8.0+
+* PHP 8.0+
 * composer
 * ext-gmp
 
