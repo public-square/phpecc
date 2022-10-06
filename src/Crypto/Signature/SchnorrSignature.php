@@ -15,10 +15,10 @@ class SchnorrSignature
     public const AUX       = 'BIP0340/aux';
     public const NONCE     = 'BIP0340/nonce';
 
-    public function sign(string $message, string $privateKey, string $rVal = null): array
+    public function sign(string $privateKey, string $message, string $randomK = null): array
     {
         // hash the message
-        $hash = hash('sha256', $message);
+        $hash = ctype_xdigit($message) === true ? $message : hash('sha256', $message);
 
         // create a secp256k1 curve
         $generator = CurveFactory::getGeneratorByName(SecgCurve::NAME_SECP_256K1);
@@ -29,9 +29,9 @@ class SchnorrSignature
         // initialize private key
         $d = gmp_init($privateKey, 16);
 
-        if ($rVal === null) {
+        if ($randomK === null) {
             // initialize randomness
-            $rVal = bin2hex(random_bytes(32));
+            $randomK = bin2hex(random_bytes(32));
         }
 
         // calculate multiplied point
@@ -51,7 +51,7 @@ class SchnorrSignature
         $tagAux    = $auxSingle . $auxSingle;
 
         // concatenate the tag and the random k and hash it
-        $auxHash       = hash('sha256', hex2bin($tagAux . $rVal));
+        $auxHash       = hash('sha256', hex2bin($tagAux . $randomK));
         $auxRandNumber = gmp_init($auxHash, 16);
 
         // calculate the nonce
@@ -97,15 +97,16 @@ class SchnorrSignature
         ];
     }
 
-    public function verify(string $signature, string $message, string $publicKey): bool
+    public function verify(string $publicKey, string $signature, string $message): bool
     {
         ['r' => $r, 's' => $s, 'm' => $m, 'P' => $P] = $this->initSchnorrVerify($signature, $message, $publicKey);
 
         $tagChallengeSingle = hash('sha256', self::CHALLENGE);
         $tagChallenge       = $tagChallengeSingle . $tagChallengeSingle;
+        $paddedR            = str_pad(gmp_strval($r, 16), 64, '0', STR_PAD_LEFT);
 
         // convert the hex to binary so it is NOT hashed as a simple string
-        $concatToHash = hex2bin($tagChallenge . gmp_strval($r, 16) . gmp_strval($P->getX(), 16) . $m);
+        $concatToHash = hex2bin($tagChallenge . $paddedR . gmp_strval($P->getX(), 16) . $m);
         $schnorrVal   = hash('sha256', $concatToHash);
 
         $e = gmp_mod(gmp_init($schnorrVal, 16), gmp_init(JacobianPoint::CurveN, 16));
@@ -146,7 +147,7 @@ class SchnorrSignature
     {
         $r = gmp_init(mb_substr($signature, 0, 64), 16);
         $s = gmp_init(mb_substr($signature, 64, 64), 16);
-        $m = hash('sha256', $message);
+        $m = ctype_xdigit($message) === true ? $message : hash('sha256', $message);
 
         $secp256k1Curve = CurveFactory::getCurveByName(SecgCurve::NAME_SECP_256K1);
 

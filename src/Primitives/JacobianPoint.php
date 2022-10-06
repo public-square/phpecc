@@ -38,7 +38,7 @@ use Mdanter\Ecc\Curves\SecgCurve;
 /**
  * This class incorporates work from Mdanter's ECC Primitive Point class and Paul Miller's Noble-Secp256k1 Library.
  * The original works are licensed under the MIT License.
- * This JacobianPoint class contains all of the important methods to handle JacobianPoint Manipulation as to contribute to verification of a Schnorr signature.
+ * This JacobianPoint class contains all of the important methods to handle JacobianPoint Manipulation as to verify and sign Schnorr signatures.
  */
 class JacobianPoint
 {
@@ -285,11 +285,24 @@ class JacobianPoint
      */
     public function cmp(self $other): int
     {
-        $equal = (gmp_cmp($this->x, $other->getX()) === 0);
-        $equal &= (gmp_cmp($this->y, $other->getY()) === 0);
-        $equal &= (gmp_cmp($this->z, $other->getZ()) === 0);
+        $X1 = $this->getX();
+        $Y1 = $this->getY();
+        $Z1 = $this->getZ();
 
-        if ($equal) {
+        $X2 = $other->getX();
+        $Y2 = $other->getY();
+        $Z2 = $other->getZ();
+
+        $Z1Z1 = $this->mod(gmp_pow($Z1, 2));
+        $Z2Z2 = $this->mod(gmp_pow($Z2, 2));
+
+        $U1 = $this->mod(gmp_mul($X1, $Z2Z2));
+        $U2 = $this->mod(gmp_mul($X2, $Z1Z1));
+
+        $S1 = $this->mod(gmp_mul(gmp_mul($Y1, $Z2), $Z2Z2));
+        $S2 = $this->mod(gmp_mul(gmp_mul($Y2, $Z1), $Z1Z1));
+
+        if (gmp_cmp($U1, $U2) === 0 && gmp_cmp($S1, $S2) === 0) {
             return 0;
         }
 
@@ -650,7 +663,7 @@ class JacobianPoint
     }
 
     /**
-     * Doubles Two Jacobian Points when Curve's A is O,
+     * Doubles a Jacobian Point when the Curve's A is O,
      * (Does not work when A is not O).
      * Based on: http://hyperelliptic.org/EFD/g1p/auto-shortw-jacobian-0.html#doubling-dbl-2009-l.
      */
