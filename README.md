@@ -1,14 +1,9 @@
 ## Pure PHP Elliptic Curve DSA and DH
 
-[![Build Status](https://travis-ci.org/phpecc/phpecc.svg?branch=master)](https://travis-ci.org/phpecc/phpecc)
-
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpecc/phpecc/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpecc/phpecc?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/phpecc/phpecc/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phpecc/phpecc/?branch=master)
-
-[![Latest Stable Version](https://poser.pugx.org/mdanter/ecc/v/stable.png)](https://packagist.org/packages/mdanter/ecc)
-[![Total Downloads](https://poser.pugx.org/mdanter/ecc/downloads.png)](https://packagist.org/packages/mdanter/ecc)
-[![Latest Unstable Version](https://poser.pugx.org/mdanter/ecc/v/unstable.png)](https://packagist.org/packages/mdanter/ecc)
-[![License](https://poser.pugx.org/mdanter/ecc/license.png)](https://packagist.org/packages/mdanter/ecc)
+[![Latest Stable Version](https://poser.pugx.org/public-square/phpecc/v/stable.png)](https://packagist.org/packages/public-square/phpecc)
+[![Total Downloads](https://poser.pugx.org/public-square/phpecc/downloads.png)](https://packagist.org/packages/public-square/phpecc)
+[![Latest Unstable Version](https://poser.pugx.org/public-square/phpecc/v/unstable.png)](https://packagist.org/packages/public-square/phpecc)
+[![License](https://poser.pugx.org/public-square/phpecc/license.png)](https://packagist.org/packages/public-square/phpecc)
 
 ### Information
 
@@ -26,14 +21,14 @@ The library supports the following curves:
  - nistp384 / secp384r1
  - nistp521
 
-During ECDSA, a random value `k` is required. It is acceptable to use a true RNG to generate this value, but 
-should the same `k` value ever be repeatedly used for a key, an attacker can recover that signing key. 
+During ECDSA, a random value `k` is required. It is acceptable to use a true RNG to generate this value, but
+should the same `k` value ever be repeatedly used for a key, an attacker can recover that signing key.
 The HMAC random generator can derive a deterministic k value from the message hash and private key, voiding
 this concern.
 
-The library uses a non-branching Montgomery ladder for scalar multiplication, as it's constant time and avoids secret 
-dependant branches. 
- 
+The library uses a non-branching Montgomery ladder for scalar multiplication, as it's constant time and avoids secret
+dependant branches.
+
 ### License
 
 This package is released under the MIT license.
@@ -53,7 +48,7 @@ Support for older PHP versions:
 
 You can install this library via Composer :
 
-`composer require mdanter/ecc:^1.0`
+`composer require public-square/phpecc:^1.0`
 
 ### Contribute
 
