@@ -7,7 +7,8 @@
 
 ### Information
 
-This library is a rewrite/update of Matyas Danter's ECC library. All credit goes to him.
+This library is a fork of Matyas Danter's ECC library. All credit goes to him and previous contributors.
+This fork is a drop in replacement that contains support for Schnorr signing and verifying.
 
 For more information on Elliptic Curve Cryptography please read [this fine article](http://www.matyasdanter.com/2010/12/elliptic-curve-php-oop-dsa-and-diffie-hellman/).
 
@@ -39,25 +40,15 @@ This package is released under the MIT license.
 * composer
 * ext-gmp
 
-Support for older PHP versions:
- * v0.4.x: php ^5.6|<7.2
- * v0.5.x: php ^7.0
- * v1.0.x: php ^7.0|^8.0
-
 ### Installation
 
 You can install this library via Composer :
 
-`composer require public-square/phpecc:^1.0`
+`composer require public-square/phpecc`
 
 ### Contribute
 
-When sending in pull requests, please make sure to run the `make` command.
-
-The default target runs all PHPUnit and PHPCS tests. All tests
-must validate for your contribution to be accepted.
-
-It's also always a good idea to check the results of the [Scrutinizer analysis](https://scrutinizer-ci.com/g/phpecc/phpecc/) for your pull requests.
+Please open a pull request.
 
 ### Usage
 
