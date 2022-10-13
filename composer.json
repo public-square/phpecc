@@ -39,6 +39,9 @@
         "squizlabs/php_codesniffer": "^2.0",
         "symfony/yaml": "^2.6|^3.0"
     },
+    "replace": {
+        "mdanter/ecc": "1.0.0"
+    },
     "autoload": {
         "psr-4": {
             "Mdanter\\Ecc\\": "src/"

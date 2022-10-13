@@ -17,6 +17,11 @@ class SchnorrSignature
 
     public function sign(string $privateKey, string $message, string $randomK = null): array
     {
+        // private key must be a hex string
+        if (ctype_xdigit($privateKey) === false) {
+            throw new \InvalidArgumentException('Private key must be a hex string');
+        }
+
         // hash the message
         $hash = ctype_xdigit($message) === true ? $message : hash('sha256', $message);
 
@@ -32,6 +37,10 @@ class SchnorrSignature
         if ($randomK === null) {
             // initialize randomness
             $randomK = bin2hex(random_bytes(32));
+        }
+
+        if (ctype_xdigit($randomK) === false) {
+            throw new \InvalidArgumentException('Randomness must be a hex string');
         }
 
         // calculate multiplied point
@@ -99,6 +108,11 @@ class SchnorrSignature
 
     public function verify(string $publicKey, string $signature, string $message): bool
     {
+        // public key must be a hex string
+        if (ctype_xdigit($publicKey) === false) {
+            throw new \InvalidArgumentException('Public key must be a hex string');
+        }
+
         ['r' => $r, 's' => $s, 'm' => $m, 'P' => $P] = $this->initSchnorrVerify($signature, $message, $publicKey);
 
         $tagChallengeSingle = hash('sha256', self::CHALLENGE);
