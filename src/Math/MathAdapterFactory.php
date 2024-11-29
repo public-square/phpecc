@@ -10,9 +10,9 @@ class MathAdapterFactory
     private static $forcedAdapter = null;
 
     /**
-     * @param GmpMathInterface $adapter
+     * @param GmpMathInterface|null $adapter
      */
-    public static function forceAdapter(GmpMathInterface $adapter = null)
+    public static function forceAdapter(?GmpMathInterface $adapter = null)
     {
         self::$forcedAdapter = $adapter;
     }

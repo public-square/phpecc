@@ -15,7 +15,7 @@ class SchnorrSignature
     public const AUX       = 'BIP0340/aux';
     public const NONCE     = 'BIP0340/nonce';
 
-    public function sign(string $privateKey, string $message, string $randomK = null): array
+    public function sign(string $privateKey, string $message, ?string $randomK = null): array
     {
         // private key must be a hex string
         if (ctype_xdigit($privateKey) === false) {

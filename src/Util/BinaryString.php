@@ -31,10 +31,10 @@ class BinaryString
      *
      * @param string $str
      * @param int $start
-     * @param int $length (optional)
+     * @param int|null $length (optional)
      * @return string
      */
-    public static function substring(string $str, int $start = 0, int $length = null): string
+    public static function substring(string $str, int $start = 0, ?int $length = null): string
     {
         // Premature optimization: cache the function_exists() result
         static $exists = null;
@@ -50,7 +50,7 @@ class BinaryString
         }
         return substr($str, $start);
     }
-    
+
     /**
      * Equivalent to hash_equals() in PHP 5.6
      *
