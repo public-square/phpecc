@@ -8,6 +8,7 @@ jobs:
   test:
     runs-on: ${{ matrix.operating-system }}
     strategy:
+      fail-fast: false
       matrix:
         operating-system: ['ubuntu-24.04', 'ubuntu-22.04', 'ubuntu-20.04']
         php-versions: ['8.1', '8.2', '8.3', '8.4']
@@ -48,7 +49,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
-        extensions: gmp, xdebug
+        extensions: gmp, pcov
 
     - name: Install dependencies
       run: composer install --prefer-dist

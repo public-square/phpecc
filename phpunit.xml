@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tests/bootstrap.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage includeUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">src/</directory>
-    </include>
-  </coverage>
-  <php>
-    <const name="PHPUNIT_DEBUG" value="false"/>
-    <ini name="display_errors" value="On"/>
-    <ini name="error_reporting" value="32767"/>
-  </php>
-  <testsuites>
-    <testsuite name="All">
-      <directory suffix="Test.php">./tests/unit</directory>
-    </testsuite>
-  </testsuites>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         bootstrap="tests/bootstrap.php"
+         cacheResult="false"
+         colors="true"
+         executionOrder="depends,defects"
+         failOnRisky="true"
+         failOnWarning="true"
+         verbose="true"
+>
+    <php>
+        <const name="PHPUNIT_DEBUG" value="false"/>
+        <ini name="display_errors" value="On"/>
+        <ini name="error_reporting" value="32767"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="Unit tests">
+            <directory>./tests/unit</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
 </phpunit>
