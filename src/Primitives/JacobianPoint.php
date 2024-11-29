@@ -277,7 +277,7 @@ class JacobianPoint
      */
     public function gmp_shiftr(\GMP | int $x, \GMP | int $n): \GMP
     {
-        return gmp_div($x, gmp_pow(2, $n));
+        return gmp_div($x, gmp_init(2, 10) ** $n);
     }
 
     /**
@@ -293,8 +293,8 @@ class JacobianPoint
         $Y2 = $other->getY();
         $Z2 = $other->getZ();
 
-        $Z1Z1 = $this->mod(gmp_pow($Z1, 2));
-        $Z2Z2 = $this->mod(gmp_pow($Z2, 2));
+        $Z1Z1 = $this->mod($Z1 ** 2);
+        $Z2Z2 = $this->mod($Z2 ** 2);
 
         $U1 = $this->mod(gmp_mul($X1, $Z2Z2));
         $U2 = $this->mod(gmp_mul($X2, $Z1Z1));

@@ -33,22 +33,10 @@ endif
 phpcbf: pretest
 		vendor/bin/phpcbf --standard=PSR2 -n src tests/unit/
 
-ocular:
-		wget https://scrutinizer-ci.com/ocular.phar
-
-ifdef OCULAR_TOKEN
-scrutinizer: ocular
-		@php ocular.phar code-coverage:upload --format=php-clover tests/output/coverage.clover --access-token=$(OCULAR_TOKEN);
-else
-scrutinizer: ocular
-		php ocular.phar code-coverage:upload --format=php-clover tests/output/coverage.clover;
-endif
-
 clean: clean-env clean-deps
 
 clean-env:
 		rm -rf coverage.clover
-		rm -rf ocular.phar
 		rm -rf tests/output/
 
 clean-deps:

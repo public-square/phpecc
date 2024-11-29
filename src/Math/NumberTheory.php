@@ -39,14 +39,12 @@ use Mdanter\Ecc\Exception\SquareRootException;
  */
 class NumberTheory
 {
-    /**
-     * @var GmpMathInterface
-     */
-    private $adapter;
+    private GmpMathInterface $adapter;
 
-    /**
-     * @param GmpMathInterface $adapter
-     */
+    private \GMP $zero;
+    private \GMP $one;
+    private \GMP $two;
+
     public function __construct(GmpMathInterface $adapter)
     {
         $this->adapter = $adapter;

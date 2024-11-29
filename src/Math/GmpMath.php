@@ -25,7 +25,7 @@ class GmpMath implements GmpMathInterface
     {
         return gmp_cmp($first, $other) === 0;
     }
-    
+
     /**
      * {@inheritDoc}
      * @see GmpMathInterface::mod()
@@ -77,7 +77,7 @@ class GmpMath implements GmpMathInterface
      */
     public function pow(\GMP $base, int $exponent): \GMP
     {
-        return gmp_pow($base, $exponent);
+        return $base ** $exponent;
     }
 
     /**
@@ -96,7 +96,7 @@ class GmpMath implements GmpMathInterface
     public function rightShift(\GMP $number, int $positions): \GMP
     {
         // Shift 1 right = div / 2
-        return gmp_div($number, gmp_pow(gmp_init(2, 10), $positions));
+        return gmp_div($number, gmp_init(2, 10) ** $positions);
     }
 
     /**
@@ -115,7 +115,7 @@ class GmpMath implements GmpMathInterface
     public function leftShift(\GMP $number, int $positions): \GMP
     {
         // Shift 1 left = mul by 2
-        return gmp_mul($number, gmp_pow(2, $positions));
+        return gmp_mul($number, gmp_init(2, 10) ** $positions);
     }
 
     /**
@@ -228,18 +228,18 @@ class GmpMath implements GmpMathInterface
         }
 
         $two = gmp_init(2);
-        $range = gmp_pow($two, $byteSize * 8);
+        $range = $two ** ($byteSize * 8);
         if (NumberSize::bnNumBits($this, $x) >= NumberSize::bnNumBits($this, $range)) {
             throw new \RuntimeException("Number overflows byte size");
         }
 
-        $maskShift = gmp_pow($two, 8);
+        $maskShift = $two ** 8;
         $mask = gmp_mul(gmp_init(255), $range);
 
         $binary = '';
         for ($i = $byteSize - 1; $i >= 0; $i--) {
             $mask = gmp_div($mask, $maskShift);
-            $binary .= pack('C', gmp_strval(gmp_div(gmp_and($x, $mask), gmp_pow($two, $i * 8)), 10));
+            $binary .= pack('C', gmp_strval(gmp_div(gmp_and($x, $mask), $two ** ($i * 8))));
         }
 
         return $binary;

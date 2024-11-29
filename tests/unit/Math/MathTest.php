@@ -218,10 +218,10 @@ class MathTest extends MathTestBase
     public function fixedSizeIntProvider()
     {
         $two = gmp_init(2, 10);
-        $maxRange8 = gmp_sub(gmp_pow($two, 8), gmp_init(1));
-        $maxRange16 = gmp_sub(gmp_pow($two, 16), gmp_init(1));
-        $maxRange24 = gmp_sub(gmp_pow($two, 24), gmp_init(1));
-        $maxRange32 = gmp_sub(gmp_pow($two, 32), gmp_init(1));
+        $maxRange8 = gmp_sub($two ** 8, gmp_init(1));
+        $maxRange16 = gmp_sub($two ** 16, gmp_init(1));
+        $maxRange24 = gmp_sub($two ** 24, gmp_init(1));
+        $maxRange32 = gmp_sub($two ** 32, gmp_init(1));
         $bits519Unpadded = gmp_init("7d48a8cdd8ea2de81d9ad3d5b6597472264bd2c1da2e6ae175dd50397d7812383dce09988bfce60b370e5a0f3eb0090d18545935b77ba521f5db598bf3ed03616a", 16);
         $bits519Padded = gmp_init("007d48a8cdd8ea2de81d9ad3d5b6597472264bd2c1da2e6ae175dd50397d7812383dce09988bfce60b370e5a0f3eb0090d18545935b77ba521f5db598bf3ed03616a", 16);
         return $this->_getAdapters([
@@ -293,10 +293,10 @@ class MathTest extends MathTestBase
             [gmp_init(1), 0],
             [gmp_init(256), 1],
             [gmp_init(65536), 2],
-            [gmp_pow(2, 32), 1],
-            [gmp_pow(2, 32), 2],
-            [gmp_pow(2, 32), 3],
-            [gmp_pow(2, 32), 4],
+            [gmp_init(2, 10) ** 32, 1],
+            [gmp_init(2, 10) ** 32, 2],
+            [gmp_init(2, 10) ** 32, 3],
+            [gmp_init(2, 10) ** 32, 4],
         ]);
     }
 

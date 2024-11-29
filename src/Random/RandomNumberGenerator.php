@@ -34,9 +34,8 @@ class RandomNumberGenerator implements RandomNumberGeneratorInterface
         $bytes = random_bytes($numBytes);
         $value = $this->adapter->stringToInt($bytes);
 
-        $mask = gmp_sub(gmp_pow(2, $numBits), 1);
-        $integer = gmp_and($value, $mask);
+        $mask = gmp_sub(gmp_init(2, 10) ** $numBits, 1);
 
-        return $integer;
+        return gmp_and($value, $mask);
     }
 }
