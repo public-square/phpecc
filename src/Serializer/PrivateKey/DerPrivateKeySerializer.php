@@ -36,10 +36,10 @@ class DerPrivateKeySerializer implements PrivateKeySerializerInterface
     private $pubKeySerializer;
 
     /**
-     * @param GmpMathInterface       $adapter
+     * @param GmpMathInterface|null $adapter
      * @param DerPublicKeySerializer|null $pubKeySerializer
      */
-    public function __construct(GmpMathInterface $adapter = null, ?DerPublicKeySerializer $pubKeySerializer = null)
+    public function __construct(?GmpMathInterface $adapter = null, ?DerPublicKeySerializer $pubKeySerializer = null)
     {
         $this->adapter = $adapter ?: MathAdapterFactory::getAdapter();
         $this->pubKeySerializer = $pubKeySerializer ?: new DerPublicKeySerializer($this->adapter);
